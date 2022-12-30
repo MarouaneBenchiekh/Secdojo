@@ -1,6 +1,6 @@
-﻿# Westeros
+﻿# Windows LAB 1
 
-### Dumped
+### Machine 1
 After making a quick  port scan with nmap:
 
     nmap -Pn <target_ip>
@@ -30,7 +30,7 @@ There it is an NT hash for an Administrator user, so let's sign in with this use
 ![enter image description here](https://i.ibb.co/BNnPpk6/Screen-Shot-2022-12-29-at-10-15-12-AM.png)
 There it is we got access successfully, now we just need to look for our flag that i found in C:\Users\Administrator\Desktop.
 
-### Shared
+### Machine 2
 
 First thing we do a quick port enumeration with nmap:
 
@@ -66,7 +66,7 @@ SecretsDump should extract information from the SAM.SAVE, SYSTEM.SAVE, and SECUR
 
 ![enter image description here](https://i.ibb.co/VY3nVkP/Screen-Shot-2022-12-29-at-11-42-42-AM.png)And congratulation we got the shell, now go and find your flag.
 
-### Eggshell
+### Machine 3
 
 For this machine, i tried to test the Zerologon vulnerability.
 First, we need to test if this machine is vulnerable to Zerologon, to test it, we can use a script that you can find here: [Zerologon_tester](https://github.com/SecuraBV/CVE-2020-1472)
@@ -77,26 +77,35 @@ So we run the script :
 We can get the DC-NAME or Domain Controller name, with an nmap scan:
 
     nmap -A -Pn <target_ip>
-![enter image description here](https://i.ibb.co/r2F4y6n/Screen-Shot-2022-12-29-at-1-14-32-PM.png)And the Name is ```SRV-DC1```, so now we run the script:
+![enter image description here](https://i.ibb.co/r2F4y6n/Screen-Shot-2022-12-29-at-1-14-32-PM.png)
+
+And the Name is ```SRV-DC1```, so now we run the script:
 ![enter image description here](https://i.ibb.co/QmT3Gry/Screen-Shot-2022-12-29-at-1-17-21-PM.png)
+
 So it can be exploit it, now to use it we gonna run this script: [Zerologon_exploit](https://github.com/risksense/zerologon)
 The command gonna look like this:
 
     python3 set_empty_pw.py <DC-NAME> <target_ip>
    
-![enter image description here](https://i.ibb.co/yYWR0RL/Screen-Shot-2022-12-29-at-1-31-40-PM.png)That was successful now we gonna dump the hashes with ```secretsdump.py```
+![enter image description here](https://i.ibb.co/yYWR0RL/Screen-Shot-2022-12-29-at-1-31-40-PM.png)
+
+That was successful now we gonna dump the hashes with ```secretsdump.py```
 
     secretsdump.py -just-dc <DC-NAME>\$@<target_ip>
 
 We can grep the Administrator hash directly:
 
-![enter image description here](https://i.ibb.co/VNn9Y6k/Screen-Shot-2022-12-29-at-1-41-33-PM.png)And there it is, now we can log as Administrator using the NTLM hash with ```psexec.py```:
+![enter image description here](https://i.ibb.co/VNn9Y6k/Screen-Shot-2022-12-29-at-1-41-33-PM.png)
+
+And there it is, now we can log as Administrator using the NTLM hash with ```psexec.py```:
 
     psexec.py -hashes <NTLM_Hash> <user>@<target_ip> cmd.exe
 
-![enter image description here](https://i.ibb.co/ynLYSPT/Screen-Shot-2022-12-29-at-1-45-14-PM.png)Here we go, you can search for the flag.
+![enter image description here](https://i.ibb.co/ynLYSPT/Screen-Shot-2022-12-29-at-1-45-14-PM.png)
 
-### Exposed
+Here we go, you can search for the flag.
+
+### Machine 4
 
 First of all, we start with out nmap scan
 

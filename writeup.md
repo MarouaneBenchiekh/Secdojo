@@ -77,8 +77,11 @@ So we run the script :
 We can get the DC-NAME or Domain Controller name, with an nmap scan:
 
     nmap -A -Pn <target_ip>
-![enter image description here](https://i.ibb.co/r2F4y6n/Screen-Shot-2022-12-29-at-1-14-32-PM.png)And the Name is ```SRV-DC1```, so now we run the script:
+![enter image description here](https://i.ibb.co/r2F4y6n/Screen-Shot-2022-12-29-at-1-14-32-PM.png)
+
+And the Name is ```SRV-DC1```, so now we run the script:
 ![enter image description here](https://i.ibb.co/QmT3Gry/Screen-Shot-2022-12-29-at-1-17-21-PM.png)
+
 So it can be exploit it, now to use it we gonna run this script: [Zerologon_exploit](https://github.com/risksense/zerologon)
 The command gonna look like this:
 
